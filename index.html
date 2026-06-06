@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Attendance System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Sidebar Modern -->
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <i class="fas fa-fingerprint"></i>
+        </div>
+        <div class="brand-text">
+            <span class="brand-title">Attend<span class="text-accent">Flow</span></span>
+            <span class="brand-subtitle">Admin System</span>
+        </div>
+    </div>
+    
+    <div class="sidebar-menu">
+        <a href="index.html" class="menu-item active">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="add.html" class="menu-item">
+            <i class="fas fa-plus-circle"></i>
+            <span>Input Absensi</span>
+        </a>
+    </div>
+    
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <span class="user-name">Admin User</span>
+                <span class="user-role">Super Admin</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+                <h2>Data Absensi Karyawan</h2>
+                <p>Kelola dan pantau kehadiran karyawan Anda</p>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="notification-icon" title="Notifikasi">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Cari karyawan..." id="searchInput">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Stats Cards -->
+    <div class="stats-container">
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-icon bg-primary-gradient">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalHadir">0</h3>
+                <p>Total Hadir</p>
+            </div>
+        </div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-icon bg-success-gradient">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalHariIni">0</h3>
+                <p>Hadir Hari Ini</p>
+            </div>
+        </div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-icon bg-warning-gradient">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="persentaseKehadiran">0%</h3>
+                <p>Kehadiran Bulan Ini</p>
+            </div>
+        </div>
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-icon bg-info-gradient">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalKaryawan">0</h3>
+                <p>Total Karyawan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table Section -->
+    <div class="data-table-container" data-aos="fade-up" data-aos-delay="150">
+        <div class="table-header">
+            <div class="table-title">
+                <i class="fas fa-table"></i>
+                <span>Rekap Absensi Karyawan</span>
+            </div>
+            <div class="table-controls">
+                <select id="sortBy" class="control-select">
+                    <option value="nama">Sort by Nama</option>
+                    <option value="tanggal">Sort by Tanggal</option>
+                    <option value="jamMasuk">Sort by Jam Masuk</option>
+                </select>
+                <select id="filterGender" class="control-select">
+                    <option value="all">Semua Gender</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+                <input type="date" id="filterDate" class="control-select" title="Filter by Tanggal">
+                <button class="btn-refresh" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Karyawan</th>
+                        <th>Alamat</th>
+                        <th>Gender</th>
+                        <th>Tanggal</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Keluar</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceTableBody">
+                    <!-- Data akan diisi JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="pagination-info">
+                <span id="paginationInfo">Menampilkan 1-5 dari 10 data</span>
+            </div>
+            <ul class="pagination" id="pagination"></ul>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Modern -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modern-modal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">
+                    <i class="fas fa-edit text-primary me-2"></i>Edit Data Absensi
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <div class="form-group-modern">
+                    <label><i class="fas fa-user"></i> Nama Lengkap</label>
+                    <input type="text" id="editNama" class="form-control-modern" placeholder="Masukkan nama">
+                </div>
+                <div class="form-group-modern">
+                    <label><i class="fas fa-map-marker-alt"></i> Alamat</label>
+                    <textarea id="editAlamat" class="form-control-modern" rows="2" placeholder="Masukkan alamat"></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group-modern">
+                            <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                            <select id="editJk" class="form-control-modern">
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group-modern">
+                            <label><i class="fas fa-calendar"></i> Tanggal Absen</label>
+                            <input type="date" id="editTanggal" class="form-control-modern">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group-modern">
+                            <label><i class="fas fa-clock"></i> Jam Masuk</label>
+                            <input type="time" id="editJamMasuk" class="form-control-modern">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group-modern">
+                            <label><i class="fas fa-hourglass-end"></i> Jam Keluar</label>
+                            <input type="time" id="editJamKeluar" class="form-control-modern">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn-save" id="saveEditBtn">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete Konfirmasi MODERN -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content modern-modal text-center">
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex p-3">
+                        <i class="fas fa-trash-alt fa-3x text-danger"></i>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-2" id="deleteModalLabel">Hapus Data?</h5>
+                <p class="text-muted mb-4">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+                <input type="hidden" id="deleteId">
+                <div class="d-flex gap-2 justify-content-center">
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn-save bg-danger" id="confirmDeleteBtn" style="background: #dc2626;">Ya, Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 AttendFlow System. Created by <strong>Nirmalasari Rodito Sulnas</strong></p>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/app.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+    
+    // Sidebar Toggle for Mobile
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+    }
+</script>
+</body>
+</html>

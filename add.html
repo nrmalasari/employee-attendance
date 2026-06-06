@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Absensi | AttendFlow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Sidebar Modern -->
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <i class="fas fa-fingerprint"></i>
+        </div>
+        <div class="brand-text">
+            <span class="brand-title">Attend<span class="text-accent">Flow</span></span>
+            <span class="brand-subtitle">Admin System</span>
+        </div>
+    </div>
+    
+    <div class="sidebar-menu">
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="add.html" class="menu-item active">
+            <i class="fas fa-plus-circle"></i>
+            <span>Input Absensi</span>
+        </a>
+    </div>
+    
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <span class="user-name">Admin User</span>
+                <span class="user-role">Super Admin</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="page-title">
+                <h2>Form Absensi Karyawan</h2>
+                <p>Isi data kehadiran karyawan dengan lengkap</p>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="notification-icon" title="Notifikasi">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Form Container -->
+    <div class="form-container" data-aos="fade-up">
+        <div class="form-card">
+            <div class="form-card-header">
+                <div class="header-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="header-text">
+                    <h3>Form Kehadiran Karyawan</h3>
+                    <p>Silakan isi semua field yang tersedia dengan lengkap dan benar</p>
+                </div>
+            </div>
+            
+            <form id="attendanceForm">
+                <div class="form-row">
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-user"></i> Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" id="nama" class="form-control-modern" placeholder="Contoh: Ahmad Fathir" required>
+                        <small class="form-text text-muted">Masukkan nama lengkap sesuai KTP</small>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-venus-mars"></i> Jenis Kelamin <span class="required">*</span></label>
+                        <select id="jenisKelamin" class="form-control-modern" required>
+                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group-modern">
+                    <label><i class="fas fa-map-marker-alt"></i> Alamat Lengkap <span class="required">*</span></label>
+                    <textarea id="alamat" class="form-control-modern" rows="3" placeholder="Masukkan alamat lengkap karyawan (Jalan, RT/RW, Kelurahan, Kecamatan, Kota)" required></textarea>
+                    <small class="form-text text-muted">Contoh: Jl. Merdeka No.10, RT 05/RW 02, Kel. Kebon Jeruk, Kec. Gambir, Jakarta Pusat</small>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-calendar-alt"></i> Tanggal Absen <span class="required">*</span></label>
+                        <input type="date" id="tanggalAbsen" class="form-control-modern" required>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-sign-in-alt"></i> Jam Masuk <span class="required">*</span></label>
+                        <input type="time" id="jamMasuk" class="form-control-modern" required>
+                        <small class="form-text text-muted">Format 24 jam (contoh: 08:00)</small>
+                    </div>
+                    <div class="form-group-modern">
+                        <label><i class="fas fa-sign-out-alt"></i> Jam Keluar <span class="required">*</span></label>
+                        <input type="time" id="jamKeluar" class="form-control-modern" required>
+                        <small class="form-text text-muted">Format 24 jam (contoh: 17:00)</small>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Pastikan data yang Anda masukkan sudah benar sebelum menyimpan.</span>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="reset" class="btn-reset">
+                        <i class="fas fa-undo-alt"></i> Reset Form
+                    </button>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-save"></i> Simpan Absensi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="footer-content">
+        <p>&copy; 2026 AttendFlow System. Created by <strong>Nirmalasari Rodito Sulnas</strong></p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/app.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true });
+    
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+    }
+</script>
+</body>
+</html>
